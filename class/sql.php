@@ -14,12 +14,12 @@
 
         //Declarando os métodos recebe o comando e os dados
         //Métodos 2
-        private function setParams($statment, $parameters = array()){
+        private function setParams($statement, $parameters = array()){
 
             //Loop dos parametros, das chaves e dos valores da consulta
             foreach ($parameters as $key => $value) {
                        //Método 4 - Passando os paramentros para os values do stmt 
-                $this->setParam($key, $value);
+                $this->setParam($statement, $key, $value);
 
             }
 
@@ -27,9 +27,9 @@
 
         //Declarando o método para passar os valores para o
         //Método 4
-        private function setParam($statment, $key, $value){
+        private function setParam($statement, $key, $value){
                 //Função criada para passar paramentros para os values do stmt
-            $statment->bindParam($key, $value);
+            $statement->bindParam($key, $value);
 
         }
 
