@@ -74,6 +74,57 @@
             ));
 
         }
+
+        //Método traz a lista de todos dados da tabela id_usuarios
+        //Não precisa instanciar o objeto Usuario()
+        public static function getList(){
+
+            //Instanciando a class Sql
+            $sql = new Sql();
+
+            return $sql->select("SELECT * FROM tb_usuarios ORDER BY deslogin");
+
+        }
+
+        //Métodos busca de dados no banco de dados
+        public static function search($login){
+
+            $sql = new Sql();
+
+            return  $sql->select("SELECT * FROM tb_usuarios WHERE deslogin LIKE :SEARCH ORDER BY deslogin", array(
+                ':SEARCH'=>"%".$login."%"
+            ));
+
+        }
+
+        //Método lista do banco de dados obtem os dados do usuarios autenticados
+        public function login($login, $password){
+
+               //Instancia a class Sql
+               $sql = new Sql();
+               //Chama o método select
+               $results = $sql->select("SELECT * FROM tb_usuarios WHERE deslogin = :LOGIN AND dessenha = :PASSWORD", array(
+                   ":LOGIN"=>$login,
+                   ":PASSWORD"=>$password
+               ));            
+   
+               if(count($results) > 0){
+   
+                   $row = $results[0];
+   
+                   $this->setIdusuario($row['idusuario']);
+                   $this->setDeslogin($row['deslogin']);
+                   $this->setDessenha($row['dessenha']);
+                   $this->setDtcadastro(new DateTime($row['dtcadastro']));
+   
+               } else {
+
+                throw new Exception("Login e/ou senha inválidos!");
+                
+               }
+
+        }
+
     }
 
 ?>
