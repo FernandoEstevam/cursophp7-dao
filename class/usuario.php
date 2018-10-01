@@ -170,6 +170,23 @@
 
         }
 
+        //Método delete dados do banco de dados
+        public function delete(){
+
+            $sql = new Sql();
+
+            $sql->query("DELETE FROM tb_usuarios WHERE idusuario = :ID", array(
+
+                ':ID'=>$this->getIdusuario()
+
+            ));
+            //Zerando as informações no banco de dados
+            $this->setIdusuario(0);
+            $this->setDeslogin("");
+            $this->setDessenha("");
+            $this->setDtcadastro(new DateTime());
+        }
+
     }
 
 ?>

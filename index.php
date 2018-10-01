@@ -46,11 +46,18 @@
     // echo $aluno;
 
     //Fazendo o update da tabela de usuarios
-    $usuario = new Usuario();
+    // $usuario = new Usuario();
     //Carrega o registro
-    $usuario->loadById(11);
-    echo $usuario;
+    // $usuario->loadById(11);
+    // echo $usuario;
     //Atualiza o usuario o banco de dados
-    $usuario->update("Creusa", "1111");
+    // $usuario->update("Creusa", "1111");
+    // echo $usuario;
+
+    //Deletando informações no banco de dados
+    $usuario = new Usuario();
+    //Carregar os dados os registros
+    $usuario->loadById(1);
+    $usuario->delete();
     echo $usuario;
 ?>
