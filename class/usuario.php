@@ -53,12 +53,7 @@
 
             if(count($results) > 0){
 
-                $row = $results[0];
-
-                $this->setIdusuario($row['idusuario']);
-                $this->setDeslogin($row['deslogin']);
-                $this->setDessenha($row['dessenha']);
-                $this->setDtcadastro(new DateTime($row['dtcadastro']));
+                $this->setData($results[0]);
 
             }
         }
@@ -110,18 +105,68 @@
    
                if(count($results) > 0){
    
-                   $row = $results[0];
-   
-                   $this->setIdusuario($row['idusuario']);
-                   $this->setDeslogin($row['deslogin']);
-                   $this->setDessenha($row['dessenha']);
-                   $this->setDtcadastro(new DateTime($row['dtcadastro']));
+                    $this->setData($results[0]);
    
                } else {
 
                 throw new Exception("Login e/ou senha inválidos!");
                 
                }
+
+        }
+
+        //Método recebe os dados do metodo set
+        public function setData($data){
+
+            $this->setIdusuario($data['idusuario']);
+            $this->setDeslogin($data['deslogin']);
+            $this->setDessenha($data['dessenha']);
+            $this->setDtcadastro(new DateTime($data['dtcadastro']));
+
+        }
+
+        //Método insere dados no banco de dados
+        public function insert(){
+
+            $sql = new Sql();   
+                                    //Procedure banco de dados mysql
+            $results = $sql->select("CALL sp_usuarios_insert(:LOGIN, :PASSWORD)", array(
+
+                ':LOGIN'=>$this->getDeslogin(),
+                ':PASSWORD'=>$this->getDessenha()
+
+            ));
+
+            if(count($results) > 0){
+                $this->setData($results[0]);
+            }
+        }
+
+        //Método construct recebe ja os valores de login e password
+        //Os paramentros com = "" esta atribuindo os valores as variáveis
+        //Caso não seja passado o valor fica padrão
+        public function __construct($login = "", $password = ""){
+
+            $this->setDeslogin($login);
+            $this->setDessenha($password);
+
+        }
+
+        //Método para atulizar o banco de dados 
+        public function update($login, $password){
+
+            $this->setDeslogin($login);
+            $this->setDessenha($password);
+
+            $sql = new Sql();
+
+            $sql->query("UPDATE tb_usuarios SET deslogin = :LOGIN, dessenha = :PASSWORD WHERE idusuario = :ID", array(
+
+                ':LOGIN'=>$this->getDeslogin(),
+                ':PASSWORD'=>$this->getDessenha(),
+                ':ID'=>$this->getIdusuario()
+
+            ));
 
         }
 

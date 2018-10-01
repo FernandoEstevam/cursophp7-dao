@@ -23,8 +23,34 @@
     // echo json_encode($search);
 
     //Carrega o usuario usando login e a senha faz a validação
-    $login = new Usuario();
-    $login->login("Fernando","709244");
+    // $login = new Usuario();
+    // $login->login("Fernando","709244");
 
-    echo $login;
+    // echo $login;
+
+    //Inserindo usuario no banco de dados
+    //Instanciando a clas Usuario()
+    //$aluno = new Usuario();
+
+    //Passando as informações pelo método set
+    //$aluno->setDeslogin("aluno");
+    //$aluno->setDessenha("779988");
+
+    //Chamando o método insert para executar a inserção no banco de dados
+    //$aluno->insert();
+    //echo $aluno;
+
+    //Inserido dados no banco de dados atraves do método construct
+    // $aluno = new Usuario("William","127529");
+    // $aluno->insert();
+    // echo $aluno;
+
+    //Fazendo o update da tabela de usuarios
+    $usuario = new Usuario();
+    //Carrega o registro
+    $usuario->loadById(11);
+    echo $usuario;
+    //Atualiza o usuario o banco de dados
+    $usuario->update("Creusa", "1111");
+    echo $usuario;
 ?>
